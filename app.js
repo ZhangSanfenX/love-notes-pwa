@@ -14,7 +14,7 @@ const button=(label,action,classes='')=>`<button type="button" class="${classes}
 function toast(s){const t=$('#toast');t.textContent=s;t.style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.style.display='none',4200);}
 function bind(root,action,fn){root.querySelectorAll(`[data-act="${action}"]`).forEach(b=>b.onclick=fn);}
 function sheet(title,body,footer='<button type="button" data-close>关闭</button>'){
-  const dialog=document.createElement('dialog');dialog.setAttribute('aria-label',title);dialog.innerHTML=`<form><div class="modal-head row between"><h2>${title}</h2><button class="plain" type="button" aria-label="关闭" data-close>×</button></div><div class="modal-body">${body}</div><div class="modal-foot row between">${footer}</div></form>`;
+  const dialog=document.createElement('dialog');dialog.setAttribute('aria-label',title);dialog.innerHTML=`<form><div class="modal-head row between"><h2>${esc(title)}</h2><button class="plain" type="button" aria-label="关闭" data-close>×</button></div><div class="modal-body">${body}</div><div class="modal-foot row between">${footer}</div></form>`;
   document.body.append(dialog);dialog.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>dialog.close());dialog.addEventListener('close',()=>dialog.remove(),{once:true});dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});dialog.showModal();return dialog;
 }
 function confirmAction(title,message,fn){const d=sheet(title,`<p>${esc(message)}</p>`,`${button('保留','keep')} ${button('确认','confirm','primary')}`);bind(d,'keep',()=>d.close());bind(d,'confirm',async()=>{try{await fn();d.close();}catch(e){toast(e.message);}});}
@@ -33,7 +33,7 @@ async function loadArt(){
 }
 function card(e,style={},square=false){
   const v=e?count(e):{n:'♡',unit:'给我们的日子一个名字'},image=sticker(style),layout=+style.layout||0;
-  return `<div class="love-card layout-${layout} ${square?'square':''} ${style.photo?'has-photo':''}" style="background:${COLORS[style.theme]||COLORS[0]}">${style.photo?`<img class="card-photo" alt="我们的照片" src="${esc(style.photo)}"><div class="shade" style="opacity:${Math.min(.8,Math.max(.15,(+style.shade||40)/100))}"></div>`:''}<span class="watermark">♥</span><div class="card-inner"><div class="card-caption">${esc(e?.title||'故事，从心动那天开始')}</div><div class="card-number">${esc(v.n)}<small>${e?'天':''}</small></div><div class="card-date">${e?esc(e.date.replaceAll('-','.'))+'　'+esc(v.unit):'把每一次心动，都好好收藏'}</div><div class="card-signature">ZYW <span class="heart">♥</span> CSX / LOVE NOTES</div></div>${image?`<img class="card-sticker ${style.sticker?.includes(':')?'single':''}" alt="${style.sticker==='none'?'':'虎羊插画'}" src="${image}">`:''}</div>`;
+  return `<div class="love-card layout-${layout} ${square?'square':''} ${style.photo?'has-photo':''}" style="background:${COLORS[style.theme]||COLORS[0]}">${style.photo?`<img class="card-photo" alt="我们的照片" src="${esc(style.photo)}"><div class="shade" style="opacity:${Math.min(.8,Math.max(.15,(+style.shade||40)/100))}"></div>`:''}<span class="watermark">♥</span><div class="card-inner"><div class="card-caption">${esc(e?.title||'故事，从心动那天开始')}</div><div class="card-number">${esc(v.n)}<small>${e?'天':''}</small></div><div class="card-date">${e?esc(e.date.replaceAll('-','.'))+'　'+esc(v.unit):'把每一次心动，都好好收藏'}</div><div class="card-signature">${esc(state.names||'ZYW♥CSX')} / LOVE NOTES</div></div>${image?`<img class="card-sticker ${style.sticker?.includes(':')?'single':''}" alt="${style.sticker==='none'?'':'虎羊插画'}" src="${image}">`:''}</div>`;
 }
 function render(){
   applyTheme();const titles={home:['ZYW<span class="heart">♥</span>CSX的恋爱手记','OUR LITTLE FOREVER / 每一天，都值得记住'],cards:['把心动放在身边','LOVE CARDS / 收藏一张我们的日子'],notes:['今天，也想记住','LOVE NOTES / 收藏细碎的幸福'],settings:['我们的小世界','JUST US / 认真珍藏每一天']};
@@ -130,7 +130,7 @@ function showUpdate(){const d=sheet('有新版手记可以使用','<p>先保存�
 async function boot(){
   try{db=await openDb();state=await readDb();state.events||=[];state.notes||=[];await loadArt();render();matchMedia('(prefers-color-scheme:dark)').addEventListener('change',()=>applyTheme());
     if('serviceWorker'in navigator){const controlled=!!navigator.serviceWorker.controller;let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;if(controlled){refreshing=true;location.reload();}else toast('离线程序已准备好，可添加到主屏幕使用');});registration=await navigator.serviceWorker.register('./sw.js',{scope:'./'});if(registration.waiting)showUpdate();registration.addEventListener('updatefound',()=>{const worker=registration.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller)showUpdate();});});}
-  }catch(e){$('#app').innerHTML=`<div class="empty"><h1>暂时没有打开手记</h1><p>${esc(e.message)}</p><button onclick="location.reload()">重新打开</button></div>`;}
+  }catch(e){$('#app').innerHTML=`<div class="empty"><h1>暂时没有打开手记</h1><p>${esc(e.message)}</p><p>请关闭此页面后重新打开。</p></div>`;}
 }
 window.addEventListener('beforeinstallprompt',ev=>{ev.preventDefault();installPrompt=ev;});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&state&&!document.querySelector('dialog[open]'))render();});
