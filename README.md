@@ -1,6 +1,15 @@
-# ZYW♥CSX的恋爱手记 · PWA 1.2.1
+# ZYW♥CSX的恋爱手记 · PWA 1.3.0
 
 可添加到 iPhone 主屏幕的离线恋爱手记。[打开手记](https://zhangsanfenx.github.io/love-notes-pwa/)。原生 Android 项目的网页版，不包含广告或分析脚本。未登录的记录只保存在本机；主动登录后，云日记通过独立同步服务保存到坚果云，不上传到 GitHub。
+
+## 1.3.0 更新
+
+- 纪念日支持公历（默认）及 1900—2199 农历年；保留对应公历日期。闰月在没有对应闰月的年份按普通月，小月没有三十时按廿九。累计天数按真实日期，整年里程按所选历法周年。
+- 日记本、共享本及旧记录默认只展开最新一篇，其他显示表情、时间、一行摘要和回应数量。可自行展开、收起，搜索仍检索完整正文。
+- 卡片照片新增独立 0—30 高斯模糊滑杆，原图保留，预览、共享样式及导出图片使用该设置。
+- 修改及撤回应需二次确认，显示修改／撤回时间。自己的卡片署名增加“我”；登录账号优先显示对应虎／羊表情组，仍可自由切换。
+- 云端账号 → 共享动态通知，可订阅不含正文的 Web Push。iPhone 需 iOS 16.4 及以上、主屏幕安装和主动授权；推送不是关闭网页后的持续数据同步，点开通知后再同步正文。
+- 修复服务端在存在动态事件触发器时误判写入结果的问题。本人设备可使用版本一致的缓存补传确实缺失的文件；不会覆盖可正常读取的文件。遇到缺失提示，请保留原设备数据，勿退出或清理缓存。
 
 ## 1.2.1 更新
 
@@ -34,7 +43,7 @@ Safari 标签页与主屏幕版的存储可能独立。请先安装再记录；�
 
 ## 功能
 
-- 纪念日、生日、倒数日、大事记，公历日期与每年重复；选择当天为第 0 天或第 1 天。
+- 纪念日、生日、倒数日、大事记，公历／农历日期与每年重复；选择当天为第 0 天或第 1 天。
 - 里程碑总开关，内置 100 / 200 / 300 天和 1 / 2 / 3 年；单项开关、自定义里程、删除与固定默认项。
 - 虎、羊各 15 种心情插画与双人抱心图；唠唠本记录、照片、搜索及编辑。
 - 3 种排版、6 种底色、虎羊表情和照片卡片；照片拖动裁剪、双指及滑杆缩放、虚化和遮罩。
@@ -45,7 +54,7 @@ Safari 标签页与主屏幕版的存储可能独立。请先安装再记录；�
 
 ## 提醒与 iPhone 限制
 
-GitHub Pages 是静态托管。此版本没有推送服务器，不会申请一个无法兑现定时提醒的通知权限。
+GitHub Pages 托管页面，独立云服务发送共享本更新推送。纪念日定时提醒仍通过系统日历执行，未提供服务端定时推送。
 
 日期及里程碑提醒可导出 `.ics` 日历文件，包含本地时间上午 9 点和提前 3 天的提醒；同日项目合并。每年重复的日期导出未来 10 年；2 月 29 日在平年按 2 月 28 日计算。
 
@@ -87,3 +96,5 @@ GitHub Pages 发布 main 分支根目录。所有资源、manifest 与 Service W
 - [GitHub Pages HTTPS](https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https)
 - [iPhone 主屏幕网页 App](https://support.apple.com/guide/iphone/open-as-web-app-iphea86e5236/ios)
 - [Apple Web Push 限制](https://developer.apple.com/documentation/usernotifications/sending-web-push-notifications-in-web-apps-and-browsers)
+
+农历表由 [lunar-javascript 1.7.7](https://github.com/6tail/lunar-javascript) 生成，MIT 许可见 vendor/lunar-LICENSE；与 Android 共用同一份数值，核对 [香港天文台历法参考](https://www.hko.gov.hk/sc/gts/time/conversion.htm)。

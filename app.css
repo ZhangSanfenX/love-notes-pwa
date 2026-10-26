@@ -16,3 +16,7 @@ html[data-theme=dark]{--bg:#201b20;--paper:#2b242a;--soft:#3b2e34;--ink:#f1e1df;
 .response-pet{width:46px;height:46px;object-fit:contain;flex-shrink:0}
 .reply-choice{text-align:center;padding:12px;border-radius:18px;background:var(--soft,#f1c4ca22)}
 .reply-preview{width:92px;height:92px;object-fit:contain}
+.note-fold-row{display:flex;justify-content:flex-end;margin:-10px -5px 4px}.note-fold-row button{font-size:12px;padding:7px 12px}
+.compact-note{padding:14px 16px}.compact-toggle{padding:0;width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:none;font-weight:400;color:var(--ink)}
+.compact-toggle .pet{width:40px;height:40px;flex:none}.compact-toggle .grow{min-width:0}.compact-toggle .small{display:block;font-size:11px;line-height:1.6}
+.one-line{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:100%;font-size:14px;margin:4px 0}
