@@ -3,7 +3,7 @@ import {MOODS,THEMES,COLORS,DEFAULTS,clone,today,validDate,count,prepare,key,ini
 const $=(s,r=document)=>r.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>crypto.randomUUID?.()||`${Date.now()}-${Math.random().toString(16).slice(2)}`;
-const DB='zyw-csx-lovenotes';let db,state,page='home',filter='全部',search='',registration,installPrompt;
+const DB='zyw-csx-lovenotes';let db,state,page='home',filter='全部',search='',registration,installPrompt,refreshOnUpdate=false;
 const art={tiger:[],lamb:[]};
 const pet=(tiger,mood=0)=>art[tiger?'tiger':'lamb'][mood]||'./assets/couple.png';
 const sticker=s=>s?.sticker==='none'?'':s?.sticker?.includes(':')?pet(s.sticker.startsWith('tiger'),+s.sticker.split(':')[1]):'./assets/couple.png';
@@ -126,10 +126,10 @@ async function importBackup(){
   }catch(e){toast('未恢复：'+e.message);}
 }
 async function checkUpdate(){if(!registration)return toast('离线程序正在准备，请联网后再试');try{await registration.update();if(registration.waiting)showUpdate();else toast('已检查更新；如有新版会显示更新提示');}catch{toast('暂时无法检查更新，请确认网络连接');}}
-function showUpdate(){const d=sheet('有新版手记可以使用','<p>先保存正在编辑的内容，再更新程序。本机记录会保留。</p>',`${button('稍后','later')}${button('立即更新','update-now','primary')}`);bind(d,'later',()=>d.close());bind(d,'update-now',()=>{registration.waiting?.postMessage('ACTIVATE_UPDATE');d.close();});}
+function showUpdate(){if(document.querySelector('[data-update-dialog]'))return;const d=sheet('有新版手记可以使用','<p>先保存正在编辑的内容，再更新程序。本机记录会保留。</p>',`${button('稍后','later')}${button('立即更新','update-now','primary')}`);d.dataset.updateDialog='true';bind(d,'later',()=>d.close());bind(d,'update-now',()=>{refreshOnUpdate=true;registration.waiting?.postMessage('ACTIVATE_UPDATE');d.close();});}
 async function boot(){
   try{db=await openDb();state=await readDb();state.events||=[];state.notes||=[];await loadArt();render();matchMedia('(prefers-color-scheme:dark)').addEventListener('change',()=>applyTheme());
-    if('serviceWorker'in navigator){const controlled=!!navigator.serviceWorker.controller;let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;if(controlled){refreshing=true;location.reload();}else toast('离线程序已准备好，可添加到主屏幕使用');});registration=await navigator.serviceWorker.register('./sw.js',{scope:'./'});if(registration.waiting)showUpdate();registration.addEventListener('updatefound',()=>{const worker=registration.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller)showUpdate();});});}
+    if('serviceWorker'in navigator){const controlled=!!navigator.serviceWorker.controller;let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;if(controlled||refreshOnUpdate){refreshing=true;location.reload();}else toast('离线程序已准备好，可添加到主屏幕使用');});registration=await navigator.serviceWorker.register('./sw.js',{scope:'./'});if(registration.waiting&&controlled)showUpdate();registration.addEventListener('updatefound',()=>{const worker=registration.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed'&&controlled)showUpdate();});});}
   }catch(e){$('#app').innerHTML=`<div class="empty"><h1>暂时没有打开手记</h1><p>${esc(e.message)}</p><p>请关闭此页面后重新打开。</p></div>`;}
 }
 window.addEventListener('beforeinstallprompt',ev=>{ev.preventDefault();installPrompt=ev;});
