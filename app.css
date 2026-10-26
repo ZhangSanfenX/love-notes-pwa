@@ -20,3 +20,5 @@ html[data-theme=dark]{--bg:#201b20;--paper:#2b242a;--soft:#3b2e34;--ink:#f1e1df;
 .compact-note{padding:14px 16px}.compact-toggle{padding:0;width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:none;font-weight:400;color:var(--ink)}
 .compact-toggle .pet{width:40px;height:40px;flex:none}.compact-toggle .grow{min-width:0}.compact-toggle .small{display:block;font-size:11px;line-height:1.6}
 .one-line{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:100%;font-size:14px;margin:4px 0}
+.note-tools{display:flex;justify-content:flex-end;margin:0 0 9px}.note-tools button{padding:7px 11px;font-size:12px;min-height:32px}
+.recovery-card{border-color:var(--rose)}.recovery-preview{border-radius:16px;padding:10px 14px;background:var(--soft)}

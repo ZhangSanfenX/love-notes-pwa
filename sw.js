@@ -1,4 +1,4 @@
-const CACHE='lovenotes-pwa-1.3.0-final';
+const CACHE='lovenotes-pwa-1.3.1-final';
 const FILES=['./','./index.html','./app.css','./app.js','./core.js','./lunar.js','./lunar-data.js','./image-blur.js','./cloud.js','./cloud-ui.js','./cloud-config.js','./manifest.webmanifest','./assets/couple.png','./assets/mood_atlas.png','./assets/tiger-lamb-heart-180.png','./assets/tiger-lamb-heart-192.png','./assets/tiger-lamb-heart-512.png','./vendor/fflate.js'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)));});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('lovenotes-pwa-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
