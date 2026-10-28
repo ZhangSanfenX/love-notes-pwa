@@ -1,0 +1,18 @@
+export const EVENT_KEYS=['id','title','date','type','calendar','lunar','inclusive','annual','note','remind','advance','milestoneOptions','milestoneMaster','milestoneOn','milestoneAdvance','milestones','milestoneYears'];
+export function basicEvent(e,featured){const out={};for(const k of EVENT_KEYS)if(e[k]!==undefined)out[k]=structuredClone(e[k]);out.featured=e.id===featured;out.cardStyle={};for(const k of ['theme','layout','sticker','shade','blur'])if(e.cardStyle?.[k]!==undefined)out.cardStyle[k]=e.cardStyle[k];return out;}
+export const canonical=x=>JSON.stringify(sort(x));function sort(x){return Array.isArray(x)?x.map(sort):x&&typeof x==='object'?Object.fromEntries(Object.keys(x).sort().map(k=>[k,sort(x[k])])):x;}
+export class CalendarSync{
+ constructor(cloud,getRoot,saveRoot){this.cloud=cloud;this.getRoot=getRoot;this.saveRoot=saveRoot;this.last=0;}
+ get enabled(){return !!this.cloud.session&&this.cloud.state.calendar?.user===this.cloud.session.user.id&&this.cloud.state.calendar.enabled;}
+ async enable(value){await this.cloud.change(s=>{s.calendar={...(s.calendar?.user===s.session.user.id?s.calendar:{}),user:s.session.user.id,enabled:value,baseline:s.calendar?.user===s.session.user.id?s.calendar.baseline||{}:{}};});this.last=0;if(value)this.cloud.sync();}
+ due(){return this.enabled&&Date.now()-this.last>300000;}
+ async sync(){if(!this.enabled)return;const c=this.cloud,account=c.session.user.id,remote=await c.request('/api/calendar'),original=structuredClone(this.getRoot()),root=structuredClone(original),baseline=structuredClone(c.state.calendar.baseline||{}),remoteMap=new Map(remote.items.map(x=>[x.id,x]));let changed=false,conflicts=0;
+ for(const id of new Set([...root.events.map(e=>e.id),...remoteMap.keys(),...Object.keys(baseline)])){const local=root.events.find(e=>e.id===id),r=remoteMap.get(id),b=baseline[id],value=local?basicEvent(local,root.featured):null,localChanged=b?canonical(value)!==canonical(b.event):!!local,remoteChanged=r&&(r.version!==(b?.version||0));
+ if(remoteChanged&&canonical(value)===canonical(r.deleted?null:r.event)){baseline[id]={version:r.version,event:value};continue;}
+ if(localChanged&&remoteChanged&&canonical(value)!==canonical(r.deleted?null:r.event)){if(local){const copy=structuredClone(local);copy.id=crypto.randomUUID();copy.title+='（本机副本）';root.events.push(copy);conflicts++;changed=true;}apply();continue;}
+ if(localChanged){try{const saved=await c.request('/api/calendar/'+encodeURIComponent(id),'POST',{expectedVersion:b?.version||0,operationId:crypto.randomUUID(),deleted:!value,event:value});baseline[id]={version:saved.version,event:value};}catch(e){if(e.status===409){this.last=0;throw Error('纪念日在其它设备发生修改，本机内容保留，请再同步一次');}throw e;}}
+ else if(remoteChanged)apply();
+ function apply(){if(!r)return;const index=root.events.findIndex(e=>e.id===id);if(r.deleted){if(index>=0){root.events.splice(index,1);changed=true;}}else{const item=structuredClone(r.event);delete item.featured;item.cardStyle={...(local?.cardStyle||{}),...(item.cardStyle||{})};if(index>=0)root.events[index]=item;else root.events.push(item);if(r.event.featured)root.featured=id;changed=true;}baseline[id]={version:r.version,event:r.deleted?null:structuredClone(r.event)};}
+ }
+ if(c.session?.user.id!==account)return;if(changed){const latest=this.getRoot();if(canonical(latest.events)!==canonical(original.events)||latest.featured!==original.featured)throw Error('日子正在编辑，本机修改已保留，请稍后同步');await this.saveRoot({...latest,events:root.events,featured:root.featured});}await c.change(s=>{if(s.calendar?.user===account){s.calendar.baseline=baseline;s.calendar.message=conflicts?'已合并；冲突内容保留为本机副本':'纪念日已同步';}},'status');this.last=Date.now();}
+}
