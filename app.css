@@ -55,3 +55,6 @@ html,body{height:100%;overflow:hidden}#app{position:fixed;top:var(--app-top,0px)
 #journal-compose .compose-label{font-weight:700;-webkit-text-stroke:.12px currentColor}
 
 #journal-compose{color:#ffffff}#journal-compose .compose-label{font-size:15px;line-height:22px}
+
+/* Calendar glyph and native picker share one centered 48px target. */
+.journal-search-dialog .date-picker-icon{width:48px;height:48px;min-width:48px;flex:0 0 48px;display:flex;align-items:center;justify-content:center}.journal-search-dialog .date-picker-icon>svg{display:block;flex:none;pointer-events:none}.journal-search-dialog .date-picker-icon>input[type=date]{position:absolute;inset:0;box-sizing:border-box;width:100%;height:100%;min-width:0;min-height:0;max-width:100%;max-height:100%;margin:0;padding:0;border:0;opacity:0}
