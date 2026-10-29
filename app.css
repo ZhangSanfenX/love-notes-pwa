@@ -61,3 +61,5 @@ html,body{height:100%;overflow:hidden}#app{position:fixed;top:var(--app-top,0px)
 
 .note-head{display:flex;align-items:center;gap:12px;flex-wrap:nowrap}.note-head>.pet{flex:none}.note-head>div:not(.note-fold-row){flex:1;min-width:0}.note-head h3{overflow-wrap:anywhere}.note-head>.note-fold-row{flex:none;margin:0;align-self:center}.note-fold-row button{white-space:nowrap}
 .event.dragging{opacity:.55;outline:2px solid var(--rose)}.event.drop-target{box-shadow:0 -3px var(--rose)}.event{touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+
+.event .pet.event-photo{object-fit:cover;border-radius:14px}
