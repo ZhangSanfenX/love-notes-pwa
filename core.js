@@ -1,5 +1,5 @@
 import {fromSolar,toSolar,annualDate} from './lunar.js';
-export const MOODS=['开心','温暖','甜蜜','心动','充实','得意','惊喜','平静','迷茫','疲惫','孤单','委屈','难过','烦躁','生气','亲亲','抱抱','安慰','贴贴','想你','一起开心'];
+export const MOODS=['开心','温暖','甜蜜','心动','充实','得意','惊喜','平静','迷茫','疲惫','孤单','委屈','难过','烦躁','生气','亲亲-1','抱抱-1','安慰-1','贴贴-1','想你-1','一起开心-1','亲亲-2','晚安','安慰-2','投喂','想你-2','送花'];
 export const THEMES=['莓果奶油','抹茶心事','芋泥晚安','蜜桃日落','晴空来信','香草手帐'];
 export const COLORS=['#f9dfd8','#e8eedd','#ece4f3','#ffe4cf','#dfeef6','#f5ecd9'];
 export const DEFAULTS=[100,200,300].map(value=>({unit:'day',value,pinned:true})).concat([1,2,3].map(value=>({unit:'year',value,pinned:true})));
@@ -28,7 +28,7 @@ export function validate(root){
   const checkOptions=(options,library=false)=>{if(!Array.isArray(options)||options.length>60)throw Error('里程选项格式有误');const seen=new Set();for(const o of options){if(!o||!['day','year'].includes(o.unit)||!Number.isInteger(o.value)||o.value<1||o.value>(o.unit==='year'?100:365000)||seen.has(key(o)))throw Error('里程选项数值无效');seen.add(key(o));}};
   if(root.milestoneLibrary)checkOptions(root.milestoneLibrary,true);
   const ids=new Set();for(const e of root.events){if(!e||typeof e.id!=='string'||ids.has(e.id)||typeof e.title!=='string'||!e.title.trim()||e.title.length>100||!validDate(e.date)||!['纪念日','生日','倒数日','大事记'].includes(e.type))throw Error('纪念日格式有误');ids.add(e.id);if(e.calendar&&!['solar','lunar'].includes(e.calendar))throw Error('日期历法无效');if(e.calendar==='lunar'&&toSolar(e.lunar)!==e.date)throw Error('农历与对应公历不一致');if(e.milestoneOptions)checkOptions(e.milestoneOptions);}
-  for(const n of root.notes)if(!n||typeof n.text!=='string'||n.text.length>50000||!Number.isInteger(n.mood)||n.mood<0||n.mood>=21||!validDate(n.date?.slice(0,10))||(n.photos&&!Array.isArray(n.photos))||(n.photos?.length||0)>6)throw Error('心情记录格式有误');
+  for(const n of root.notes)if(!n||typeof n.text!=='string'||n.text.length>50000||!Number.isInteger(n.mood)||n.mood<0||n.mood>=27||!validDate(n.date?.slice(0,10))||(n.photos&&!Array.isArray(n.photos))||(n.photos?.length||0)>6)throw Error('心情记录格式有误');
   const walk=(v,depth=0)=>{if(depth>20)throw Error('备份结构过深');if(Array.isArray(v)){for(const x of v)walk(x,depth+1);}else if(v&&typeof v==='object'){for(const [k,x]of Object.entries(v)){if(['__proto__','constructor','prototype'].includes(k))throw Error('备份字段无效');if(k==='sortOrder'&&(!Number.isSafeInteger(x)||x<0))throw Error('卡片顺序无效');if(k==='photoRef'&&x!==null&&!/^[A-Za-z0-9+/]{43}=$/.test(x))throw Error('卡片照片标识无效');if(k==='blur'&&(!Number.isInteger(x)||x<0||x>30))throw Error('模糊强度无效');if(k==='photo'&&x&&(!/^data:image\/(jpeg|png|webp|gif|heic|heif|avif);base64,[a-zA-Z0-9+/=]+$/.test(x)))throw Error('照片格式不支持');walk(x,depth+1);}}};
   walk(root);for(const n of root.notes)for(const p of n.photos||[])if(!/^data:image\/(jpeg|png|webp|gif|heic|heif|avif);base64,[a-zA-Z0-9+/=]+$/.test(p))throw Error('日记照片格式不支持');
   return root;

@@ -69,3 +69,5 @@ html,body{height:100%;overflow:hidden}#app{position:fixed;top:var(--app-top,0px)
 .mood-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.mood-tabs button{font-size:13px;padding:10px 4px}
 
 .gallery-stage.zoomed{display:block}.gallery-stage.zoomed img{max-width:none;max-height:none;object-fit:initial;cursor:zoom-out}.gallery-stage:not(.zoomed) img{cursor:zoom-in}
+
+.photo-gallery .gallery-count{margin:0 0 10px;text-align:center;line-height:20px;min-height:20px}.photo-gallery .gallery-stage{height:min(56dvh,560px)}.photo-gallery .modal-foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.photo-gallery .modal-foot button,.photo-gallery .modal-foot a{display:flex;align-items:center;justify-content:center;min-width:0;min-height:48px;padding:10px 4px;border-radius:18px;background:var(--soft);color:var(--rose);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}

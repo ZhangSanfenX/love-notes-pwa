@@ -1,5 +1,5 @@
 export const EVENT_KEYS=['id','title','date','type','calendar','lunar','inclusive','annual','note','remind','advance','milestoneOptions','milestoneMaster','milestoneOn','milestoneAdvance','milestones','milestoneYears','sortOrder'];
-export function basicEvent(e,featured){const out={};for(const k of EVENT_KEYS)if(e[k]!==undefined)out[k]=structuredClone(e[k]);out.featured=e.id===featured;out.cardStyle={};for(const k of ['theme','layout','sticker','shade','blur','photoRef'])if(e.cardStyle?.[k]!==undefined)out.cardStyle[k]=e.cardStyle[k];return out;}
+export function basicEvent(e,featured){const out={};for(const k of EVENT_KEYS)if(e[k]!==undefined)out[k]=structuredClone(e[k]);out.featured=e.id===featured;out.cardStyle={};for(const k of ['theme','layout','sticker','shade','blur','photoRef','stickerVariant'])if(e.cardStyle?.[k]!==undefined)out.cardStyle[k]=e.cardStyle[k];return out;}
 export const canonical=x=>JSON.stringify(sort(x));function sort(x){return Array.isArray(x)?x.map(sort):x&&typeof x==='object'?Object.fromEntries(Object.keys(x).sort().map(k=>[k,sort(x[k])])):x;}
 const eventCanonical=value=>canonical(value?{...value,cardStyle:{photoRef:null,...value.cardStyle}}:null);
 export class CalendarSync{
