@@ -1,5 +1,5 @@
 import {fromSolar,toSolar,annualDate} from './lunar.js';
-export const MOODS=['开心','温暖','甜蜜','心动','充实','得意','惊喜','平静','迷茫','疲惫','孤单','委屈','难过','烦躁','生气','亲亲-1','抱抱-1','安慰-1','贴贴-1','想你-1','一起开心-1','亲亲-2','晚安','安慰-2','投喂','想你-2','送花'];
+export const MOODS=['开心','温暖','甜蜜','心动','充实','得意','惊喜','平静','迷茫','疲惫','孤单','委屈','难过','烦躁','生气','亲亲-1','抱抱','安慰-1','贴贴','想你-1','一起开心','亲亲-2','晚安','安慰-2','投喂','想你-2','送花'];
 export const THEMES=['莓果奶油','抹茶心事','芋泥晚安','蜜桃日落','晴空来信','香草手帐'];
 export const COLORS=['#f9dfd8','#e8eedd','#ece4f3','#ffe4cf','#dfeef6','#f5ecd9'];
 export const DEFAULTS=[100,200,300].map(value=>({unit:'day',value,pinned:true})).concat([1,2,3].map(value=>({unit:'year',value,pinned:true})));
