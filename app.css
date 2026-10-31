@@ -63,3 +63,9 @@ html,body{height:100%;overflow:hidden}#app{position:fixed;top:var(--app-top,0px)
 .event.dragging{opacity:.55;outline:2px solid var(--rose)}.event.drop-target{box-shadow:0 -3px var(--rose)}.event{touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 
 .event .pet.event-photo{object-fit:cover;border-radius:14px}
+
+.response-row{align-items:flex-start}.response-row>.response-pet{align-self:flex-start}.note-head[data-fold-note]{cursor:pointer}.photo-gallery{max-width:900px}.gallery-stage{height:65dvh;display:flex;align-items:center;justify-content:center;background:#171317;border-radius:16px;overflow:auto}.gallery-stage img{max-width:100%;max-height:100%;object-fit:contain}.gallery-count{text-align:center}.photo-gallery .modal-foot{gap:8px}.photo-gallery .modal-foot button{font-size:12px;padding:10px}.photo-gallery .modal-foot a{font-size:12px;color:var(--rose)}
+
+.mood-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.mood-tabs button{font-size:13px;padding:10px 4px}
+
+.gallery-stage.zoomed{display:block}.gallery-stage.zoomed img{max-width:none;max-height:none;object-fit:initial;cursor:zoom-out}.gallery-stage:not(.zoomed) img{cursor:zoom-in}
