@@ -71,3 +71,19 @@ html,body{height:100%;overflow:hidden}#app{position:fixed;top:var(--app-top,0px)
 .gallery-stage.zoomed{display:block}.gallery-stage.zoomed img{max-width:none;max-height:none;object-fit:initial;cursor:zoom-out}.gallery-stage:not(.zoomed) img{cursor:zoom-in}
 
 .photo-gallery .gallery-count{margin:0 0 10px;text-align:center;line-height:20px;min-height:20px}.photo-gallery .gallery-stage{height:min(56dvh,560px)}.photo-gallery .modal-foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.photo-gallery .modal-foot button,.photo-gallery .modal-foot a{display:flex;align-items:center;justify-content:center;min-width:0;min-height:48px;padding:10px 4px;border-radius:18px;background:var(--soft);color:var(--rose);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+
+/* Reply preview and actions remain separate touch targets in both themes. */
+.reply-dialog .reply-choice{margin:12px 0;padding:16px;border:1px solid var(--line);background:transparent;min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.reply-dialog .reply-choice p{margin:0;line-height:1.6}
+.reply-dialog .reply-actions{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:12px;margin:0 0 20px}
+.reply-dialog .reply-actions button{min-width:0;min-height:48px;width:100%;margin:0;padding:12px 8px;line-height:1.4;font-size:14px}
+.reply-dialog .reply-actions [data-act=clear-reaction]{background:transparent;border:1px solid var(--line);color:var(--muted);font-weight:400}
+.reply-dialog .reply-actions button:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+.reply-dialog .reply-actions+.field{margin-top:0}
+
+.reply-dialog.draft-enabled .modal-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.reply-dialog.draft-enabled .modal-foot button{min-height:44px;padding:11px 14px;font-size:13px;white-space:nowrap}
+.reply-dialog.draft-enabled .modal-foot [type=submit]{margin-left:auto}
+.reply-exit-dialog .modal-foot{display:flex;flex-wrap:wrap;gap:10px}
+.reply-exit-dialog .modal-foot button{min-height:44px;padding:11px 12px;font-size:13px}
+.reply-dialog:focus,.reply-exit-dialog:focus{outline:none}
