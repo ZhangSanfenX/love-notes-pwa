@@ -87,3 +87,5 @@ html,body{height:100%;overflow:hidden}#app{position:fixed;top:var(--app-top,0px)
 .reply-exit-dialog .modal-foot{display:flex;flex-wrap:wrap;gap:10px}
 .reply-exit-dialog .modal-foot button{min-height:44px;padding:11px 12px;font-size:13px}
 .reply-dialog:focus,.reply-exit-dialog:focus{outline:none}
+
+.note-draft-dialog .modal-foot{display:flex;flex-wrap:wrap;gap:10px}.note-draft-dialog .modal-foot button{min-height:44px;font-size:13px;padding:11px 13px;white-space:nowrap}.note-draft-dialog .modal-foot [type=submit]{margin-left:auto}.note-draft-dialog:focus{outline:none}
