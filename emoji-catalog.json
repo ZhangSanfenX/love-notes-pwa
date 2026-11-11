@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "id": "sweet",
+      "name": "撒娇",
+      "hint": "心动、贴贴与小嗔怪"
+    },
+    {
+      "id": "care",
+      "name": "陪伴",
+      "hint": "抱抱、安慰与约定"
+    },
+    {
+      "id": "daily",
+      "name": "日常",
+      "hint": "一起度过普通的日子"
+    }
+  ],
+  "entries": [
+    {
+      "id": "interaction:1:0",
+      "mood": 15,
+      "group": "sweet",
+      "aliases": [
+        "亲吻",
+        "喜欢"
+      ]
+    },
+    {
+      "id": "interaction:2:0",
+      "mood": 21,
+      "group": "sweet",
+      "aliases": [
+        "亲吻",
+        "喜欢"
+      ]
+    },
+    {
+      "id": "interaction:1:3",
+      "mood": 18,
+      "group": "sweet",
+      "aliases": []
+    },
+    {
+      "id": "interaction:1:4",
+      "mood": 19,
+      "group": "sweet",
+      "aliases": []
+    },
+    {
+      "id": "interaction:2:4",
+      "mood": 25,
+      "group": "sweet",
+      "aliases": []
+    },
+    {
+      "id": "interaction:3:2",
+      "mood": 29,
+      "group": "sweet",
+      "aliases": [
+        "嗔怪",
+        "小生气",
+        "撒娇"
+      ]
+    },
+    {
+      "id": "interaction:4:0",
+      "mood": 33,
+      "group": "sweet",
+      "aliases": [
+        "拉手",
+        "一起走",
+        "手牵手"
+      ]
+    },
+    {
+      "id": "interaction:4:1",
+      "mood": 34,
+      "group": "sweet",
+      "aliases": [
+        "想抱你",
+        "抱我",
+        "撒娇"
+      ]
+    },
+    {
+      "id": "interaction:4:2",
+      "mood": 35,
+      "group": "sweet",
+      "aliases": [
+        "脸蛋",
+        "揉脸",
+        "逗你"
+      ]
+    },
+    {
+      "id": "interaction:1:1",
+      "mood": 16,
+      "group": "care",
+      "aliases": [
+        "想抱你",
+        "拥抱"
+      ]
+    },
+    {
+      "id": "interaction:1:2",
+      "mood": 17,
+      "group": "care",
+      "aliases": [
+        "难过",
+        "伤心",
+        "不开心",
+        "哄你"
+      ]
+    },
+    {
+      "id": "interaction:2:2",
+      "mood": 23,
+      "group": "care",
+      "aliases": [
+        "难过",
+        "伤心",
+        "不开心",
+        "哄你"
+      ]
+    },
+    {
+      "id": "interaction:2:1",
+      "mood": 22,
+      "group": "care",
+      "aliases": [
+        "睡觉",
+        "早睡"
+      ]
+    },
+    {
+      "id": "interaction:3:0",
+      "mood": 27,
+      "group": "care",
+      "aliases": [
+        "下雨",
+        "保护",
+        "遮雨"
+      ]
+    },
+    {
+      "id": "interaction:3:3",
+      "mood": 30,
+      "group": "care",
+      "aliases": [
+        "月亮",
+        "星星"
+      ]
+    },
+    {
+      "id": "interaction:4:3",
+      "mood": 36,
+      "group": "care",
+      "aliases": [
+        "和好",
+        "对不起",
+        "别生气",
+        "哄你"
+      ]
+    },
+    {
+      "id": "interaction:4:4",
+      "mood": 37,
+      "group": "care",
+      "aliases": [
+        "承诺",
+        "说好了",
+        "拉勾",
+        "拉钩"
+      ]
+    },
+    {
+      "id": "interaction:4:5",
+      "mood": 38,
+      "group": "care",
+      "aliases": [
+        "想见你",
+        "回来",
+        "等你回家"
+      ]
+    },
+    {
+      "id": "interaction:1:5",
+      "mood": 20,
+      "group": "daily",
+      "aliases": []
+    },
+    {
+      "id": "interaction:2:3",
+      "mood": 24,
+      "group": "daily",
+      "aliases": [
+        "吃饭",
+        "草莓",
+        "喂你"
+      ]
+    },
+    {
+      "id": "interaction:2:5",
+      "mood": 26,
+      "group": "daily",
+      "aliases": []
+    },
+    {
+      "id": "interaction:3:1",
+      "mood": 28,
+      "group": "daily",
+      "aliases": []
+    },
+    {
+      "id": "interaction:3:4",
+      "mood": 31,
+      "group": "daily",
+      "aliases": []
+    },
+    {
+      "id": "interaction:3:5",
+      "mood": 32,
+      "group": "daily",
+      "aliases": [
+        "喝水",
+        "可可",
+        "干杯"
+      ]
+    }
+  ]
+}
