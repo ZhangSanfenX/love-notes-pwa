@@ -51,9 +51,9 @@ export class ResilientStorage {
     let head;try{head=await get(this.db,headKey(namespace));}catch{/* The primary may still be healthy. */}
     const primary=head?.primaryKey||namespace;this.active.set(namespace,primary);
     try{
-      let value=await get(this.db,primary);if(value===undefined&&(head||await get(this.db,PREFIX+'seen:'+namespace)))throw Error('主记录缺失');if(value===undefined)value=clone(fallback);
+      let value=await get(this.db,primary);if(value===undefined&&(head||await get(this.db,PREFIX+'seen:'+namespace)))throw Error('主记录缺失');const uninitialized=value===undefined;if(uninitialized)value=clone(fallback);
       // Establish protection for existing versions without deleting/moving keys.
-      try{await this.persist(namespace,value,false);}catch(e){this.warnings.push('本机恢复副本尚未完整建立，请先导出备份。');}
+      try{await this.persist(namespace,value,uninitialized);}catch(e){this.warnings.push('本机恢复副本尚未完整建立，请先导出备份。');}
       this.values.set(namespace,value);return value;
     }catch(error){
       try{const restored=await this.snapshot(namespace);this.recovered.add(namespace);this.active.set(namespace,PREFIX+'recovered-primary:'+namespace);this.values.set(namespace,clone(restored.value));return restored.value;}
